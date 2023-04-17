@@ -1,4 +1,5 @@
 ﻿using eTickets.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace eTickets
 {
@@ -12,10 +13,13 @@ namespace eTickets
         {
             configRoot = configuration;
         }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             //DbContext configuration
-            services.AddDbContext<AppDbContext>();
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             services.AddRazorPages();
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
